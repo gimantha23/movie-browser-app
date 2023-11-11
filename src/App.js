@@ -1,10 +1,10 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Favorites from "./Components/Favorites/Favorites";
-import MovieDetail from "./Components/MovieDetail/MovieDetail";
+import Favorites from "./Pages/Favorites/Favorites";
+import MovieDetail from "./Pages/MovieDetail/MovieDetail";
 import TopNavbar from "./Components/Navbar/Navbar";
-import Home from "./Components/Home/Home";
+import Home from "./Pages/Home/Home";
 
 function App() {
   return (

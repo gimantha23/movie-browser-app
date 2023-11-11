@@ -6,7 +6,7 @@ import { imgBaseUrl } from "../../Utils/Constants";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const MovieDetail = () => {
   const { movieId } = useParams();
@@ -43,29 +43,21 @@ const MovieDetail = () => {
   //to add or remove items from favorites (saved to localstorage)
   const addToFavorites = () => {
     let favorites = [...favoriteMovies];
-    if (favoriteMovies.length > 0) {
-      const isItemExists = favoriteMovies.find(
-        (item) => item.id === movieDetail.id
-      );
-      if (isItemExists) {
-        favorites = favorites.filter((item) => item.id !== movieDetail.id);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        setMsg("Movie removed from favorites");
-        setShowMsg(true);
-      } else {
-        favorites.push(movieDetail);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        setMsg("Movie added to favorites!");
-        setShowMsg(true);
-      }
-      setFavoriteMovies(favorites);
+    const isItemExists = favoriteMovies.find(
+      (item) => item.id === movieDetail.id
+    );
+    if (isItemExists) {
+      favorites = favorites.filter((item) => item.id !== movieDetail.id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setMsg("Movie removed from favorites");
+      setShowMsg(true);
     } else {
       favorites.push(movieDetail);
       localStorage.setItem("favorites", JSON.stringify(favorites));
       setMsg("Movie added to favorites!");
       setShowMsg(true);
-      setFavoriteMovies(favorites);
     }
+    setFavoriteMovies(favorites);
   };
 
   return !isLoading ? (
