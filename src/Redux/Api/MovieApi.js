@@ -20,3 +20,13 @@ export const searchMovies = createAsyncThunk(
     return searchResultList.data.results;
   }
 );
+
+export const getMovieById = createAsyncThunk(
+  "movies/getMovieById",
+  async (movieId) => {
+    const movieDetail = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+    );
+    return movieDetail.data;
+  }
+);

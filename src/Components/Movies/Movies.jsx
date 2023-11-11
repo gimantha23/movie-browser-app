@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { imgBaseUrl } from "../../Utils/Constants";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const Movies = ({ activeTab }) => {
   const moviesList = useSelector((store) => store.movies.moviesList);
@@ -14,7 +15,6 @@ const Movies = ({ activeTab }) => {
   );
   const [displayList, setDisplayList] = useState([]);
   const isLoading = useSelector((store) => store.movies.loading);
-  const imgBaseUrl = "https://image.tmdb.org/t/p/w500/";
 
   useEffect(() => {
     if (searchResultList?.length > 0) {
@@ -80,18 +80,7 @@ const Movies = ({ activeTab }) => {
       </div>
     </Container>
   ) : (
-    <Container
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "80vh",
-      }}
-    >
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    </Container>
+    <LoadingSpinner />
   );
 };
 
