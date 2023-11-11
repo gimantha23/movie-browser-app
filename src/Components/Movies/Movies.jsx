@@ -40,6 +40,16 @@ const Movies = ({ activeTab }) => {
                   <Card.Title className="text-center">
                     {mov.title ? mov.title : mov.original_name.slice(0, 21)}
                   </Card.Title>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "12px",
+                    }}
+                  >
+                    <span>{mov.release_date}</span>
+                    <span>&#9733;&nbsp;{mov.vote_average}</span>
+                  </div>
                 </Card.Body>
               </Card>
             </div>
@@ -50,9 +60,9 @@ const Movies = ({ activeTab }) => {
   ) : (
     <Container
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         height: "80vh",
       }}
     >
