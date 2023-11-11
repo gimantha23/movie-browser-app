@@ -1,17 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-export const fetchMovies = createAsyncThunk("movies/fetchMovies", async (activeTab) => {
-  const movieList = await axios.get(
-    `https://api.themoviedb.org/3/movie/${activeTab}?api_key=a0bfa1c77530216db1c063c5dd662e22`
-  );
-  return movieList.data.results;
-});
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchMovies, searchMovies } from "../Api/MovieApi";
 
 const moviesSlice = createSlice({
   name: "movies",
   initialState: {
     moviesList: [],
+    searchResultList: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -26,6 +20,19 @@ const moviesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(searchMovies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchMovies.fulfilled, (state, action) => {
+        state.searchResultList = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(searchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

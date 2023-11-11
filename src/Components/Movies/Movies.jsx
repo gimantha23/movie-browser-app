@@ -1,13 +1,28 @@
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const Movies = ({ activeTab }) => {
   const moviesList = useSelector((store) => store.movies.moviesList);
+  const searchResultList = useSelector(
+    (store) => store.movies.searchResultList
+  );
+  const [displayList, setDisplayList] = useState([]);
   const isLoading = useSelector((store) => store.movies.loading);
   const imgBaseUrl = "https://image.tmdb.org/t/p/w500/";
+
+  useEffect(() => {
+    if (searchResultList?.length > 0) {
+      setDisplayList(searchResultList);
+    } else {
+      setDisplayList(moviesList);
+    }
+  }, [moviesList, searchResultList]);
 
   return !isLoading ? (
     <Container>
@@ -22,7 +37,7 @@ const Movies = ({ activeTab }) => {
         {`${activeTab.toString().replace("_", " ")} Movies`}
       </h6>
       <div className="row mt-5 mb-5 justify-content-center">
-        {moviesList?.map((mov) => {
+        {displayList?.map((mov) => {
           return (
             <div
               className="col-lg-3 col-sm-6 col-md-4 p-2 d-flex justify-content-center"
@@ -48,7 +63,14 @@ const Movies = ({ activeTab }) => {
                     }}
                   >
                     <span>{mov.release_date}</span>
-                    <span>&#9733;&nbsp;{mov.vote_average}</span>
+                    <span>
+                      {" "}
+                      <FontAwesomeIcon
+                        icon={faStar}
+                        style={{ marginRight: "3px" }}
+                      />
+                      {mov.vote_average}
+                    </span>
                   </div>
                 </Card.Body>
               </Card>
