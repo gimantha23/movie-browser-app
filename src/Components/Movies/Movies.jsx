@@ -3,14 +3,14 @@ import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import MovieCard from "../MovieCard/MovieCard";
+import ErrorComponent from "../Error/Error";
 
 const Movies = ({ activeTab }) => {
-  const moviesList = useSelector((store) => store.movies.moviesList);
+  const { moviesList, loading: isLoading, error } = useSelector((store) => store.movies);
   const searchResultList = useSelector(
     (store) => store.movies.searchResultList
   );
   const [displayList, setDisplayList] = useState([]);
-  const isLoading = useSelector((store) => store.movies.loading);
 
   useEffect(() => {
     if (searchResultList?.length > 0) {
@@ -20,7 +20,9 @@ const Movies = ({ activeTab }) => {
     }
   }, [moviesList, searchResultList]);
 
-  return !isLoading ? (
+  return error ? (
+    <ErrorComponent message={error} />
+  ) : !isLoading ? (
     <Container>
       <h6
         className="text-left fw-bold ps-1"

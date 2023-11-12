@@ -7,12 +7,16 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
+import ErrorComponent from "../../Components/Error/Error";
 
 const MovieDetail = () => {
   const { movieId } = useParams();
   const dispatch = useDispatch();
-  const movieDetail = useSelector((store) => store.movies.movieDetail);
-  const isLoading = useSelector((store) => store.movies.loading);
+  const {
+    movieDetail,
+    loading: isLoading,
+    error,
+  } = useSelector((store) => store.movieDetail);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [msg, setMsg] = useState("");
   const [showMsg, setShowMsg] = useState(false);
@@ -26,7 +30,7 @@ const MovieDetail = () => {
     if (items) {
       setFavoriteMovies(items);
     }
-  }, [favoriteMovies]);
+  }, []);
 
   //to check if a movie is added to favorites
   const isAddedToFavorites = () => {
@@ -60,7 +64,9 @@ const MovieDetail = () => {
     setFavoriteMovies(favorites);
   };
 
-  return !isLoading ? (
+  return error ? (
+    <ErrorComponent message={error} />
+  ) : !isLoading ? (
     <Container className="mt-5">
       <Row>
         <Col
