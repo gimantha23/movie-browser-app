@@ -7,8 +7,8 @@
 ## Table of Contents
 
 - [Installation](#installation)
-- [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Tech Stack](#tech-stack)
 
 ## Installation
 
